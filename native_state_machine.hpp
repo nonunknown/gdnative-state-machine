@@ -5,6 +5,7 @@
 #include <Node.hpp>
 #include <Array.hpp>
 #include <String.hpp>
+#include <FuncRef.hpp>
 
 using namespace godot;
 
@@ -16,7 +17,10 @@ private:
     uint8_t last_state = -1;
     Node* target;
     String* states;
-
+    FuncRef* func = FuncRef::_new();
+    void _call(String name);
+    bool is_changing;
+    
 public:
     static void _register_methods();
 
@@ -24,6 +28,10 @@ public:
     void register_state(Node* _target, Array keys);
     void change_state(uint8_t state_to);
     void update();
+    uint8_t get_current_state();
+    bool last_state_was(uint8_t state);
+    bool state_is(uint8_t state);
+
     NativeStateMachine();
     ~NativeStateMachine();
 };
